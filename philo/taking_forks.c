@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 15:25:48 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/20 14:31:29 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/20 14:36:21 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void   print_think(t_philo *philo)
 			printf("%ld %d is thinking\n", get_current_time() - philo->data->time, philo->id);
 		philo = philo->next;
 	}
-	
-	
 }
 
 void *take_fork(void *p)
