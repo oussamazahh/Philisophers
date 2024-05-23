@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:36:05 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/18 21:44:55 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:23:59 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	ft_atoi(char *str)
 
 int	*ft_memset(int *b, int c, size_t len)
 {
-	int		*str;
-	size_t			i;
+	int			*str;
+	size_t		i;
 
 	str = b;
 	i = 0;
