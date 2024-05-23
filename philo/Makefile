@@ -6,18 +6,20 @@
 #    By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 12:25:39 by ozahidi           #+#    #+#              #
-#    Updated: 2024/05/20 12:10:09 by ozahidi          ###   ########.fr        #
+#    Updated: 2024/05/23 21:22:56 by ozahidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g  -fsanitize=address
-#  -g  -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g  
+#  -g  -fsanitize=address-fsanitize=thread 
 NAME = philo
 
-SRCS = ft_philo.c check.c create_table.c table_tools.c\
-		taking_forks.c tools.c create_data.c ft_sleep.c
+SRCS = ft_philo.c check.c create_table.c \
+		 tools.c create_data.c ft_sleep.c\
+		create_treads.c display_message.c \
+		
 
 OBJS = ${SRCS:.c=.o}
 
