@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sleep.c                                         :+:      :+:    :+:   */
+/*   destroy_mutex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 11:39:49 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/23 21:30:48 by ozahidi          ###   ########.fr       */
+/*   Created: 2024/05/24 10:39:32 by ozahidi           #+#    #+#             */
+/*   Updated: 2024/05/24 10:43:02 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_current_time(void)
+void	destroy_mutex(t_philo *philo)
 {
-	struct timeval	tv;
+	int	i;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-int	ft_sleep(t_philo *philo, int time)
-{
-	long	start;
-
-	pthread_mutex_lock(&philo->data->check);
-	if (philo->data->kill == 1)
-		return (1);
-	pthread_mutex_unlock(&philo->data->check);
-	start = get_current_time();
-	while (get_current_time() - start < time)
-		usleep(100);
-	return (0);
+	i = 0;
+	pthread_mutex_destroy(&philo->data->check);
+	while (i < philo->data->number_of_philo)
+	{
+		pthread_detach(philo[i].philo);
+		pthread_mutex_destroy(&philo[i].l_fork->fork);
+		pthread_mutex_destroy(&philo[i].r_fork->fork);
+		pthread_mutex_destroy(&philo->data->forks[i].fork);
+		i++;
+	}
 }

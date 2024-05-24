@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:30 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/23 21:25:51 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/24 10:42:24 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,18 @@ int					create_table(t_philo **philo, t_data **data, char **av,
 int					create_data(t_data **data, char **av, int ac);
 
 /* CREATE PHILO */
-int					create_treads(t_philo *philo);
+int					create_threads(t_philo *philo);
+int					_death_note(void *param);
+
+/* DESTROY MUTEX */
+void				destroy_mutex(t_philo *philo);
 
 /* PRINT FUNCTION */
 int					display_message(t_philo *philo, int value);
 
 /* TIME */
 long				get_current_time(void);
-int					ft_sleep(int time);
+int					ft_sleep(t_philo *philo, int time);
 
 /* TOOLS */
 int					ft_atoi(char *str);
