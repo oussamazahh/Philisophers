@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:30 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/24 10:42:24 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:22:33 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int					_death_note(void *param);
 void				destroy_mutex(t_philo *philo);
 
 /* PRINT FUNCTION */
-int					display_message(t_philo *philo, int value);
+int					display_message(t_philo *philo, char *value);
 
 /* TIME */
 long				get_current_time(void);
