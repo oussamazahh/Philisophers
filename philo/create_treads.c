@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:05:20 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/24 17:10:56 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/24 22:14:24 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int	set_eat(t_philo *philo)
 	if (ft_sleep(philo, philo->data->time_eat))
 		return (1);
 	if (philo->data->kill == 1)
-	{
-		usleep(86);
 		return (1);
-	}
 	philo->eat++;
 	philo->last_meal = get_current_time();
 	pthread_mutex_unlock(&philo->l_fork->fork);
@@ -43,9 +40,7 @@ void	*routine(void *pram)
 	philo = (t_philo *)pram;
 	if (philo->id % 2 == 0)
 	{
-		if (display_message(philo, "is sleeping"))
-			return (NULL);
-		if (ft_sleep(philo, philo->data->time_sleep))
+		if (display_message(philo, "is thinking"))
 			return (NULL);
 	}
 	while (1)
@@ -71,6 +66,7 @@ int	create_threads(t_philo *philo)
 	{
 		if (pthread_create(&philo[i].philo, NULL, &routine, &philo[i]) == -1)
 			return (1);
+		usleep(50);
 		i++;
 	}
 	if (_death_note(philo))
