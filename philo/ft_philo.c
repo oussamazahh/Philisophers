@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:07 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/23 19:40:45 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:28:42 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int ac, char **av)
 			return (1);
 		if (create_table(&philo, &data, av, ac))
 			return (1);
-		if (create_treads(philo))
+		if (create_threads(philo))
 			return (1);
 	}
 }
