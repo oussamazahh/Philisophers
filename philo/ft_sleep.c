@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:39:49 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/23 21:30:48 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:12:27 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ long	get_current_time(void)
 int	ft_sleep(t_philo *philo, int time)
 {
 	long	start;
+	int		kill;
 
-	pthread_mutex_lock(&philo->data->check);
-	if (philo->data->kill == 1)
-		return (1);
-	pthread_mutex_unlock(&philo->data->check);
 	start = get_current_time();
+	kill = philo->data->kill;
 	while (get_current_time() - start < time)
-		usleep(100);
+	{
+		usleep(86);
+		if (kill == 1)
+			return (1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:05:20 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/24 10:43:14 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:10:56 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 int	set_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->l_fork->fork);
-	if (display_message(philo, TAKE))
+	if (display_message(philo, "has taken a fork"))
 		return (1);
 	pthread_mutex_lock(&philo->r_fork->fork);
-	if (display_message(philo, TAKE))
+	if (display_message(philo, "has taken a fork"))
 		return (1);
-	if (display_message(philo, EAT))
+	if (display_message(philo, "is eating"))
 		return (1);
 	if (ft_sleep(philo, philo->data->time_eat))
 		return (1);
-	if (get_current_time() - philo->last_meal > philo->data->time_die)
+	if (philo->data->kill == 1)
 	{
-		philo->data->kill = 1;
+		usleep(86);
 		return (1);
 	}
 	philo->eat++;
@@ -43,19 +43,20 @@ void	*routine(void *pram)
 	philo = (t_philo *)pram;
 	if (philo->id % 2 == 0)
 	{
-		if (display_message(philo, THINK))
+		if (display_message(philo, "is sleeping"))
 			return (NULL);
-		usleep(100);
+		if (ft_sleep(philo, philo->data->time_sleep))
+			return (NULL);
 	}
 	while (1)
 	{
 		if (set_eat(philo))
 			return (NULL);
-		if (display_message(philo, SLEEP))
+		if (display_message(philo, "is sleeping"))
 			return (NULL);
 		if (ft_sleep(philo, philo->data->time_sleep))
 			return (NULL);
-		if (display_message(philo, THINK))
+		if (display_message(philo, "is thinking"))
 			return (NULL);
 	}
 	return (NULL);
