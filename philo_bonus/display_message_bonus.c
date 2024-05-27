@@ -1,37 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sleep.c                                         :+:      :+:    :+:   */
+/*   display_message_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 11:39:49 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/26 14:55:45 by ozahidi          ###   ########.fr       */
+/*   Created: 2024/05/23 21:20:28 by ozahidi           #+#    #+#             */
+/*   Updated: 2024/05/26 21:39:49 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-long	get_current_time(void)
+int	display_message(t_philo *philo, char *value)
 {
-	struct timeval	tv;
+	int	k;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-int	ft_sleep(t_philo *philo, int time)
-{
-	long	start;
-	int		kill;
-
-	start = get_current_time();
-	kill = philo->data->kill;
-	while (get_current_time() - start < time)
-	{
-		if (kill == 1)
-			return (1);
-		usleep(86);
-	}
+	sem_wait(philo->data->check);
+	k = philo->data->kill;
+	if (k == 1)
+		return (1);
+	printf("%ld %d %s\n", get_current_time()
+		- philo->data->time, philo->id, value);
+	sem_post(philo->data->check);
 	return (0);
 }
