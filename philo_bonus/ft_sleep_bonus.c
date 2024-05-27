@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:39:49 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/27 10:00:59 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/27 16:36:50 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,8 @@ int	ft_sleep(t_philo *philo, int time)
 	long	start;
 	int		kill;
 
-	sem_wait(philo->data->check);
 	start = get_current_time();
-	kill = philo->data->kill;
 	while (get_current_time() - start < time)
-	{
-		if (kill == 1)
-			return (1);
 		usleep(100);
-	}
-	sem_post(philo->data->check);
 	return (0);
 }

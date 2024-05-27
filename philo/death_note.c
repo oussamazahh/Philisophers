@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 21:37:23 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/26 15:13:27 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/27 16:31:50 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	help_death_note(t_philo *philo, int i, int *j, int *k)
 		}
 		if (*j == philo->data->number_of_philo)
 		{
-			extra_help(philo, i);
+			pthread_mutex_lock(&philo->data->check);
+			philo[i].data->kill = 1;
+			pthread_mutex_unlock(&philo->data->check);
 			return (1);
 		}
 		i++;

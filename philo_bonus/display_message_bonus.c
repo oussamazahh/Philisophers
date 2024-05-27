@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 21:20:28 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/26 21:39:49 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/27 16:25:19 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	display_message(t_philo *philo, char *value)
 {
-	int	k;
+	// int	k;
 
-	sem_wait(philo->data->check);
-	k = philo->data->kill;
-	if (k == 1)
-		return (1);
+	// sem_wait(philo->data->check);
+	// k = philo->data->kill;
+	// if (k == 1)
+		// return (1);
 	printf("%ld %d %s\n", get_current_time()
 		- philo->data->time, philo->id, value);
-	sem_post(philo->data->check);
+	// sem_post(philo->data->check);
 	return (0);
 }
