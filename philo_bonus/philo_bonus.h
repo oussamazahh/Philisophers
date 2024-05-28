@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:30 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/26 21:13:49 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/28 16:30:24 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ typedef struct s_data
 	int				kill;
 	int				id_kill;
 	long			time;
+	sem_t			*death_note;
+	sem_t			*time_e;
 	sem_t			*forks;
 	sem_t			*check;
+	sem_t			*died;
 }					t_data;
 
 typedef struct s_philo
