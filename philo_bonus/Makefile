@@ -6,14 +6,14 @@
 #    By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 12:25:39 by ozahidi           #+#    #+#              #
-#    Updated: 2024/05/26 19:41:43 by ozahidi          ###   ########.fr        #
+#    Updated: 2024/05/30 13:06:07 by ozahidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
-#  -fsanitize=thread -g 
+CFLAGS = -Wall -Wextra -Werror -g 
+#  -fsanitize=thread -g  
 NAME = philo_bonus
 
 SRCS = ft_philo_bonus.c check_bonus.c create_table_bonus.c \

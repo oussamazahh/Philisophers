@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:24:36 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/27 17:32:34 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/30 12:37:28 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ t_philo*	create_table(t_data *data, char **av, int ac)
 		return (NULL);
 	while (i <= data->number_of_philo)
 	{
-		(philo[i - 1]).last_meal = get_current_time();
 		(philo[i - 1]).eat = 0;
-		(philo[i - 1]).take = 0;
-		(philo[i - 1]).sleep = 1;
-		(philo[i - 1]).die = 0;
 		(philo[i - 1]).id = i;
 		(philo[i - 1]).data = data;
+		(philo[i - 1]).eat = philo->data->nt_eat;
 		i++;
 	}
 	return (philo);

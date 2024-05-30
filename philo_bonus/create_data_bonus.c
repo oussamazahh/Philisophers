@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:34:46 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/28 16:30:37 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/30 13:11:14 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,32 @@ t_data	*create_data(char **av, int ac)
 	data->time_die = ft_atoi(av[2]);
 	data->time_eat = ft_atoi(av[3]);
 	data->time_sleep = ft_atoi(av[4]);
-	data->time = get_current_time();
-	unlink("death_note");
-	data->death_note = sem_open("death_note", O_CREAT | O_EXCL, 0644, 1);
-	if (data->death_note == NULL)
-	{
-		printf("Error: sem_open\n");
-		exit(1);
-	}
-	unlink("time_e");
-	data->time_e = sem_open("time_e", O_CREAT | O_EXCL, 0644, 1);
-	if (data->time_e == NULL)
-	{
-		printf("Error: sem_open\n");
-		exit(1);
-	}
-	unlink("died");
-	data->died = sem_open("died", O_CREAT | O_EXCL, 0644, 1);
-	if (data->died == NULL)
-	{
-		printf("Error: sem_open\n");
-		exit(1);
-	}
+	data->kill = 0;
+	data->id_kill = 0;
 	if (ac == 6)
 		data->nt_eat = ft_atoi(av[5]);
 	else
 		data->nt_eat = -1;
-	data->kill = 0;
-	data->id_kill = 0;
-	sem_unlink("check");
-	data->check = sem_open("check", O_CREAT, 0644, 1);
-	sem_unlink("forks");
-	data->forks = sem_open("forks", O_CREAT, 0644, data->number_of_fork);
+	sem_unlink("/fasting");
+	data->fasting = sem_open("/fasting", O_CREAT | O_EXCL, 0644, 1);
+	if (data->fasting == NULL)
+	{
+		printf("Error: sem_open\n");
+		exit(1);
+	}
+	sem_unlink("/print_lock");
+	data->print_lock = sem_open("/print_lock", O_CREAT | O_EXCL, 0644, 1);
+	if (data->print_lock == NULL)
+	{
+		printf("Error: sem_open\n");
+		exit(1);
+	}
+	sem_unlink("/forks");
+	data->forks = sem_open("/forks", O_CREAT, 0644, data->number_of_fork);
+	if (data->forks == NULL)
+	{
+		printf("Error: sem_open\n");
+		exit(1);
+	}
 	return (data);
 }
