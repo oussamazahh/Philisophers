@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:30 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/28 16:30:24 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/30 12:59:33 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,22 @@ typedef struct s_data
 	int				kill;
 	int				id_kill;
 	long			time;
-	sem_t			*death_note;
-	sem_t			*time_e;
+	sem_t			*enter;//sup
 	sem_t			*forks;
-	sem_t			*check;
-	sem_t			*died;
+	sem_t			*start;
+	sem_t			*fasting;
+	sem_t			*print_lock;
 }					t_data;
 
 typedef struct s_philo
 {
 	int				id;
 	int				id_p;
-	int				die;
-	int				sleep;
 	int				eat;
-	int				take;
 	long			last_meal;
 	t_fork			*l_fork;
 	t_fork			*r_fork;
 	pthread_t		philo;
-	struct s_philo	*next;
 	t_data			*data;
 }					t_philo;
 

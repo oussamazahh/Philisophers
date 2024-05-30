@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:07 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/28 19:45:59 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/05/30 13:13:59 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,91 +15,140 @@
 void	*hdi_meaya(void *arg)
 {
 	t_philo	*philo;
-	int	i;
+	long 	start_time;
 
 	philo = (t_philo *)arg;
 	while (1)
 	{
-		i = 0;
-		sem_wait(philo->data->check);
-		if (get_current_time() - philo->last_meal >= philo->data->time_die)
+		sem_wait(philo->data->fasting);
+		start_time = get_current_time();
+		if (start_time - philo->last_meal >= philo->data->time_die)
 		{
-			sem_wait(philo->data->death_note);
+			sem_wait(philo->data->print_lock);
 			printf("\e[31m%ld %d %s\n", get_current_time()
 				- philo->data->time, philo->id, "is dead");
+			sem_post(philo->data->fasting);
 			exit(0);
 		}
-		sem_post(philo->data->check);
-		if (philo->eat == philo->data->nt_eat && philo->data->nt_eat != -1)
-		{
-			sem_wait(philo->data->time_e);
-			exit(0);
-		}
+		sem_post(philo->data->fasting);
 	}
 	return (NULL);
 }
-
+// ./philo_bonus 20 300 60 60 2 
+// ./philo_bonus 200 200 60 60 
 int	philo_routine(t_philo *philo, t_data *data)
 {
 	pthread_t	monitor;
-	
+	sem_wait(philo->data->enter);
+	philo->last_meal = get_current_time();
+	philo->data->time = get_current_time();
 	pthread_create(&monitor, NULL, hdi_meaya, philo);
-	while (1)
+	if (philo->eat != -1 )
 	{
-		display_message(philo, "is thinking");
-		sem_wait(philo->data->forks);
-		display_message(philo, "has taken a fork");
-		sem_wait(philo->data->forks);
-		display_message(philo, "has taken a fork");
-		display_message(philo, "is eating");
-		philo->last_meal = get_current_time();
-		ft_sleep(philo, philo->data->time_eat);
-		philo->eat++;
-		sem_post(philo->data->forks);
-		sem_post(philo->data->forks);
-		display_message(philo, "is sleeping");
-		ft_sleep(philo, philo->data->time_sleep);
+		while ((philo->eat != -1 && philo->eat > 0))
+		{
+			display_message(philo, "is thinking");
+			sem_wait(philo->data->forks);
+			sem_wait(philo->data->forks);
+			display_message(philo, "has taken a fork");
+			display_message(philo, "has taken a fork");
+			display_message(philo, "is eating");
+			philo->last_meal = get_current_time();
+			ft_sleep(philo, philo->data->time_eat);
+			if (philo->eat != -1)
+				philo->eat--;
+			sem_post(philo->data->forks);
+			sem_post(philo->data->forks);
+			display_message(philo, "is sleeping");
+			ft_sleep(philo, philo->data->time_sleep);
+			usleep(100);
+		}
 	}
-	return (0);
+	else
+	{
+		while (1)
+		{
+			display_message(philo, "is thinking");
+			sem_wait(philo->data->forks);
+			sem_wait(philo->data->forks);
+			display_message(philo, "has taken a fork");
+			display_message(philo, "has taken a fork");
+			display_message(philo, "is eating");
+			philo->last_meal = get_current_time();
+			ft_sleep(philo, philo->data->time_eat);
+			if (philo->eat != -1)
+				philo->eat--;
+			sem_post(philo->data->forks);
+			sem_post(philo->data->forks);
+			display_message(philo, "is sleeping");
+			ft_sleep(philo, philo->data->time_sleep);
+			usleep(100);
+		}
+	}
+	sem_post(philo->data->enter);
+	exit (0);
 }
 
+void	start_routine(t_philo	*philo)
+{
+	sem_wait(philo->data->start);
+	philo_routine(philo, philo->data);
+}
 void	*create_processes(t_philo	*philo)
 {
 	t_data	*data;
 	int	i;
 	int	pid;
+	
 
 	i = 0;
 	data = philo->data;
+	sem_unlink("/enter");
+	philo->data->enter = sem_open("/enter", O_CREAT | O_EXCL, 0644, philo->data->number_of_philo);
+	if (philo->data->enter == NULL)
+	{
+		printf("Error: sem_open\n");
+		exit(1);
+	}
+	sem_unlink("/start");
+	philo->data->start = sem_open("/start", O_CREAT | O_EXCL, 0644, 0);
+	if (philo->data->start == NULL)
+	{
+		printf("Error: sem_open\n");
+		exit(1);
+	}
 	while (i < data->number_of_philo)
 	{
 		philo[i].id_p = fork();
 		if (philo[i].id_p == 0)
 		{
-			philo_routine(&philo[i], data);
+			start_routine(&philo[i]);
 		}
 		if (philo[i].id_p < 0)
 			return (NULL);
 		i++;
 	}
-	i = 0;
+	while (i-- > 0)
+	{
+		sem_post(philo->data->start);
+	}
 	while (waitpid(0, NULL, 0) > 0)
 	{
 		i = 0;
-		while(i < data->number_of_philo )
+		while(i < data->number_of_philo)
+		{
 			kill(philo[i++].id_p, SIGKILL);
+		}
 	}
-	sem_post(data->death_note);
-	sem_close(data->died);
+	sem_unlink("/forks");
+	sem_unlink("/print_lock");
+	sem_unlink("/start");
+	sem_unlink("/fasting");
+	sem_close(data->print_lock);
 	sem_close(data->forks);
-	sem_close(data->death_note);
-	sem_close(data->check);
+	sem_close(data->start);
+	sem_close(data->fasting);
 	return (NULL);
-}
-
-void	thread_scanner(t_philo *philo, t_data *data)
-{
-	create_processes(philo);
 }
 
 int	main(int ac, char **av)
@@ -122,6 +171,6 @@ int	main(int ac, char **av)
 			return (printf("Error : incorrect argument\n"), 1);
 		data = create_data(av, ac);
 		philo = create_table(data, av, ac);
-		thread_scanner(philo, data);
+		create_processes(philo);
 	}
 }
