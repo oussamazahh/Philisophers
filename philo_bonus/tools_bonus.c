@@ -43,8 +43,8 @@ int	ft_atoi(char *str)
 
 int	*ft_memset(int *b, int c, size_t len)
 {
-	int			*str;
-	size_t		i;
+	int		*str;
+	size_t	i;
 
 	str = b;
 	i = 0;

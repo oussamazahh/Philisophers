@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_table_bonus.c                               :+:      :+:    :+:   */
+/*   death_scanner_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 13:24:36 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/30 12:37:28 by ozahidi          ###   ########.fr       */
+/*   Created: 2024/06/01 20:03:33 by ozahidi           #+#    #+#             */
+/*   Updated: 2024/06/01 20:19:36 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-t_philo	*create_table(t_data *data, char **av, int ac)
+void	*death_scanner(void *arg)
 {
-	int		i;
 	t_philo	*philo;
+	long	start_time;
 
-	i = 1;
-	philo = malloc(sizeof(t_philo) * data->number_of_philo);
-	if (!philo)
-		return (NULL);
-	while (i <= data->number_of_philo)
+	philo = (t_philo *)arg;
+	while (1)
 	{
-		(philo[i - 1]).eat = 0;
-		(philo[i - 1]).id = i;
-		(philo[i - 1]).data = data;
-		(philo[i - 1]).eat = philo->data->nt_eat;
-		i++;
+		sem_wait(philo->data->fasting);
+		start_time = get_current_time();
+		if (start_time - philo->last_meal >= philo->data->time_die)
+		{
+			sem_wait(philo->data->print_lock);
+			printf("\e[31m%ld %d %s\n", get_current_time() - philo->data->time,
+				philo->id, "is dead");
+			sem_post(philo->data->fasting);
+			exit(0);
+		}
+		sem_post(philo->data->fasting);
 	}
-	return (philo);
+	return (NULL);
 }

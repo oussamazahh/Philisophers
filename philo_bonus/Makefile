@@ -6,20 +6,20 @@
 #    By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 12:25:39 by ozahidi           #+#    #+#              #
-#    Updated: 2024/05/30 13:06:07 by ozahidi          ###   ########.fr        #
+#    Updated: 2024/06/01 20:20:07 by ozahidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g 
-#  -fsanitize=thread -g  
+CFLAGS = -Wall -Wextra -Werror 
+#  -fsanitize=thread -g   -g -fsanitize=thread
 NAME = philo_bonus
 
 SRCS = ft_philo_bonus.c check_bonus.c create_table_bonus.c \
 		 tools_bonus.c create_data_bonus.c ft_sleep_bonus.c\
 		create_treads_bonus.c display_message_bonus.c \
-		death_note_bonus.c destroy_mutex_bonus.c
+		create_process_bonus.c routine_bonus.c  death_scanner_bonus.c 
 
 OBJS = ${SRCS:.c=.o}
 
