@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:39:49 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/30 14:37:28 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/06/28 19:23:29 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ long	get_current_time(void)
 int	ft_sleep(t_philo *philo, int time)
 {
 	long	start;
-	int		kill;
 
+	(void)philo;
 	start = get_current_time();
 	while (get_current_time() - start < time)
-		usleep(100);
+		usleep(400);
 	return (0);
 }

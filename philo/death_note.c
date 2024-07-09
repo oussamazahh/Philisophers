@@ -6,40 +6,53 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 21:37:23 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/30 21:41:56 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/07/09 22:02:16 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	kill_philo(t_philo *philo, int update)
+{
+	int	result;
+
+	result = 0;
+	pthread_mutex_lock(&philo->data->check);
+	if (update)
+		philo->data->kill = 1;
+	else
+		result = philo->data->kill;
+	pthread_mutex_unlock(&philo->data->check);
+	return (result);
+}
+
 void	extra_help(t_philo *philo, int i)
 {
-	pthread_mutex_lock(&philo->data->check);
-	philo[i].data->kill = 1;
-	printf("\033[31m%ld %d died\n", get_current_time()
-		- philo->data->time, philo->id);
-	pthread_mutex_unlock(&philo->data->check);
+	kill_philo(&philo[i], 1);
+	pthread_mutex_lock(&philo->data->print_lock);
+	printf("\033[31m%ld %d died\n", get_current_time() - philo->data->time,
+		philo->id);
 }
 
 int	help_death_note(t_philo *philo, int i, int *j, int *k)
 {
 	while (i < philo->data->number_of_philo)
 	{
-		if (get_current_time() - philo[i].last_meal > philo->data->time_die)
+		if (get_current_time() - last_meal(&philo[i],
+				0) >= philo->data->time_die)
 		{
 			extra_help(philo, i);
 			return (1);
 		}
-		if (philo->data->nt_eat != -1 && philo[*k].eat >= philo->data->nt_eat)
+		if (philo->data->nt_eat != -1 && eat_meal(&philo[*k],
+				0) >= philo->data->nt_eat)
 		{
 			(*k)++;
 			(*j)++;
 		}
 		if (*j == philo->data->number_of_philo)
 		{
-			pthread_mutex_lock(&philo->data->check);
-			philo[i].data->kill = 1;
-			pthread_mutex_unlock(&philo->data->check);
+			kill_philo(&philo[i], 1);
 			return (1);
 		}
 		i++;

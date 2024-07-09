@@ -6,14 +6,14 @@
 #    By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 12:25:39 by ozahidi           #+#    #+#              #
-#    Updated: 2024/05/24 18:14:39 by ozahidi          ###   ########.fr        #
+#    Updated: 2024/07/09 22:06:23 by ozahidi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
-#  -g  -fsanitize=address -fsanitize=thread -g 
+
 NAME = philo
 
 SRCS = ft_philo.c check.c create_table.c \
@@ -28,7 +28,7 @@ GREEN=\033[0;32m
 NC=\033[0m
 
 %.o: %.c philo.h
-	@${CC} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 all : ${NAME}
 

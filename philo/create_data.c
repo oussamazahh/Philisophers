@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 19:34:46 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/26 19:12:34 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/06/29 14:02:37 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int	create_data(t_data **data, char **av, int ac)
 	else
 		(*data)->nt_eat = -1;
 	(*data)->kill = 0;
-	(*data)->id_kill = 0;
 	pthread_mutex_init(&(*data)->check, NULL);
+	pthread_mutex_init(&(*data)->secure, NULL);
+	pthread_mutex_init(&(*data)->eat_secure, NULL);
+	pthread_mutex_init(&(*data)->print_lock, NULL);
 	(*data)->forks = malloc(sizeof(t_fork) * ((*data)->number_of_fork));
 	if (!((*data)->forks))
 		return (1);

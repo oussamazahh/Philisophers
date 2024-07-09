@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:30 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/24 12:22:33 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/07/09 22:03:29 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ typedef struct s_data
 	int				time_eat;
 	int				time_sleep;
 	int				kill;
-	int				id_kill;
 	size_t			time;
 	t_fork			*forks;
 	pthread_mutex_t	check;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	eat_secure;
+	pthread_mutex_t	secure;
 }					t_data;
 
 typedef struct s_philo
@@ -65,8 +67,7 @@ typedef struct s_philo
 int					check_arg(char **av, int ac);
 
 /* TABLE CREATE */
-int					create_table(t_philo **philo, t_data **data, char **av,
-						int ac);
+int					create_table(t_philo **philo, t_data **data);
 
 /* CREATE DATA */
 int					create_data(t_data **data, char **av, int ac);
@@ -88,5 +89,7 @@ int					ft_sleep(t_philo *philo, int time);
 /* TOOLS */
 int					ft_atoi(char *str);
 int					*ft_memset(int *b, int c, size_t len);
-
+long				last_meal(t_philo *philo, int update);
+int					eat_meal(t_philo *philo, int update);
+int					kill_philo(t_philo *philo, int update);
 #endif

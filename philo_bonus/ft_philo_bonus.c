@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:07 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/06/01 20:27:41 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/06/28 19:22:54 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 		if (check_arg(av, ac) == 1)
 			return (printf("Error : incorrect argument\n"), 1);
 		data = create_data(av, ac);
-		philo = create_table(data, av, ac);
+		philo = create_table(data);
 		create_processes(philo);
 	}
 }

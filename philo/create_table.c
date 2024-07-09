@@ -6,13 +6,13 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:24:36 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/23 19:41:01 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/07/09 22:00:16 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	create_table(t_philo **philo, t_data **data, char **av, int ac)
+int	create_table(t_philo **philo, t_data **data)
 {
 	int	i;
 

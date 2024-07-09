@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:07 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/05/24 10:46:42 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/07/09 22:02:34 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 			return (printf("Error : incorrect argument\n"), 1);
 		if (create_data(&data, av, ac))
 			return (1);
-		if (create_table(&philo, &data, av, ac))
+		if (create_table(&philo, &data))
 			return (1);
 		if (create_threads(philo))
 			return (1);

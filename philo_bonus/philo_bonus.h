@@ -6,7 +6,7 @@
 /*   By: ozahidi <ozahidi@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:15:30 by ozahidi           #+#    #+#             */
-/*   Updated: 2024/06/01 20:31:59 by ozahidi          ###   ########.fr       */
+/*   Updated: 2024/07/09 22:17:17 by ozahidi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,33 @@ typedef struct s_data
 	int			time_die;
 	int			time_eat;
 	int			time_sleep;
-	int			kill;
-	int			id_kill;
 	long		time;
-	sem_t		*enter;
-	sem_t		*protect;
 	sem_t		*forks;
 	sem_t		*start;
 	sem_t		*fasting;
 	sem_t		*print_lock;
+	sem_t		*lock;
+	sem_t		*protect_meal;
+	sem_t		*protect_eat;
 }				t_data;
 
 typedef struct s_philo
 {
-	int			id;
-	int			id_p;
-	int			eat;
-	long		last_meal;
-	t_fork		*l_fork;
-	t_fork		*r_fork;
-	pthread_t	philo;
-	t_data		*data;
+	int					id;
+	int					id_p;
+	int					eat;
+	long				last_meal;
+	t_fork				*l_fork;
+	t_fork				*r_fork;
+	pthread_t			philo;
+	t_data				*data;
 }				t_philo;
 
 /* CHECK ARGUMENTS */
 int				check_arg(char **av, int ac);
 
 /* TABLE CREATE */
-t_philo			*create_table(t_data *data, char **av, int ac);
+t_philo			*create_table(t_data *data);
 
 /* CREATE DATA */
 t_data			*create_data(char **av, int ac);
@@ -71,7 +70,7 @@ t_data			*create_data(char **av, int ac);
 void			create_processes(t_philo *philo);
 
 /* PHILO ROUTINE */
-void			start_routine(t_philo *philo);
+int				philo_routine(t_philo *philo, t_data *data);
 
 /* CREATE THREAD  SCANNER*/
 void			create_thread(pthread_t *monitor,
@@ -91,5 +90,5 @@ int				ft_sleep(t_philo *philo, int time);
 /* EXTRA TOOLS */
 int				ft_atoi(char *str);
 int				*ft_memset(int *b, int c, size_t len);
-
+long			last_meal(t_philo *philo, int update);
 #endif
